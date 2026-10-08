@@ -78,7 +78,7 @@ function saveNote() {
 
 function editNote(id) {
     const notes = getNotes();
-    const note = notes.find(n => n.id == id);
+    const note = notes.find(n => String(n.id) === String(id));
     if (!note) return;
 
     document.getElementById("noteId").value = note.id;
