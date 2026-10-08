@@ -34,7 +34,7 @@ function displayNotes() {
                     <p class="card-text">${note.content}</p>
                     <p class="text-muted small">${note.date}</p>
                     <button class="btn btn-sm btn-secondary me-1" onclick="editNote('${note.id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteNote('${note.id'})">Delete</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteNote('${note.id}')">Delete</button>
                 </div>
             </div>
         `;
@@ -55,10 +55,10 @@ function saveNote() {
     let notes = getNotes();
 
     if (id) {
-        notes = notes.map(n => n.id == id ? { ...n, title, content } : n);
+        notes = notes.map(n => String(n.id) === String(id) ? { ...n, title, content } : n);
     } else {
         const newNote = {
-            id: Date.now(),
+            id: Date.now().toString(),
             title: title,
             content: content,
             date: new Date().toLocaleDateString()
@@ -68,6 +68,7 @@ function saveNote() {
 
     localStorage.setItem("sticky_notes", JSON.stringify(notes));
     displayNotes();
+    clearForm();
 
     const modalElement = document.getElementById("noteModal");
     if (modalElement && window.bootstrap) {
@@ -90,8 +91,6 @@ function editNote(id) {
     if (modalElement && window.bootstrap) {
         const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
         modal.show();
-    } else {
-        alert("Bootstrap library failed to load. Please refresh the page.");
     }
 }
 
