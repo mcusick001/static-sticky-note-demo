@@ -70,7 +70,7 @@ function saveNote() {
     displayNotes();
 
     const modalElement = document.getElementById("noteModal");
-    if (modalElement && typeof bootstrap !== "undefined") {
+    if (modalElement && window.bootstrap) {
         const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
         modal.hide();
     }
@@ -87,9 +87,11 @@ function editNote(id) {
     document.getElementById("modalTitle").innerText = "Edit Note";
 
     const modalElement = document.getElementById("noteModal");
-    if (modalElement && typeof bootstrap !== "undefined") {
+    if (modalElement && window.bootstrap) {
         const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
         modal.show();
+    } else {
+        alert("Bootstrap library failed to load. Please refresh the page.");
     }
 }
 
