@@ -33,8 +33,8 @@ function displayNotes() {
                     <h5 class="card-title">${note.title}</h5>
                     <p class="card-text">${note.content}</p>
                     <p class="text-muted small">${note.date}</p>
-                    <button class="btn btn-sm btn-secondary me-1" onclick="editNote(${note.id})">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteNote(${note.id})">Delete</button>
+                    <button class="btn btn-sm btn-secondary me-1" onclick="editNote('${note.id}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteNote('${note.id'})">Delete</button>
                 </div>
             </div>
         `;
@@ -98,8 +98,8 @@ function editNote(id) {
 function deleteNote(id) {
     if (confirm("Are you sure you want to delete this note?")) {
         let notes = getNotes();
-        notes = notes.filter(n => n.id != id);
-        localStorage.setItem("sticky_note", JSON.stringify(notes));
+        notes = notes.filter(n => String(n.id) !== String(id));
+        localStorage.setItem("sticky_notes", JSON.stringify(notes));
         displayNotes();
     }
 }
