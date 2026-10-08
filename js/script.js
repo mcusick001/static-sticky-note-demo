@@ -14,6 +14,8 @@ function getNotes() {
 function displayNotes() {
     const notes = getNotes();
     const container = document.getElementById("notesContainer");
+    if (!container) return;
+    
     container.innerHTML = "";
 
     if (notes.length === 0) {
@@ -24,6 +26,7 @@ function displayNotes() {
     notes.forEach(note => {
         const col = document.createElement("div");
         col.className = "col-md-4 mb-4";
+        
         col.innerHTML = `
             <div class="card sticky-note h-100">
                 <div class="card-body">
@@ -67,8 +70,10 @@ function saveNote() {
     displayNotes();
 
     const modalElement = document.getElementById("noteModal");
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
+    if (modalElement && typeof bootstrap !== "undefined") {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+        modal.hide();
+    }
 }
 
 function editNote(id) {
@@ -81,8 +86,11 @@ function editNote(id) {
     document.getElementById("noteContentInput").value = note.content;
     document.getElementById("modalTitle").innerText = "Edit Note";
 
-    const modal = new bootstrap.Modal(document.getElementById("noteModal"));
-    modal.show();
+    const modalElement = document.getElementById("noteModal");
+    if (modalElement && typeof bootstrap !== "undefined") {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+        modal.show();
+    }
 }
 
 function deleteNote(id) {
